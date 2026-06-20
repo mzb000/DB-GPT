@@ -1,0 +1,15 @@
+INFO:     Will watch for changes in these directories: ['D:\\DB-GPT\\backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [14352] using WatchFiles
+C:\Users\Muhammad Zabiullah\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\pydantic\_internal\_fields.py:132: UserWarning: Field "model_provider" in ChatRequest has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [11000]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'venv\Lib\site-packages\_distutils_hack\__init__.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11000]

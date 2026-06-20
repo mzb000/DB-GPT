@@ -1,0 +1,92 @@
+"use client";
+
+import { useState } from "react";
+import { useDashboards } from "@/hooks/use-dashboards";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Plus, LayoutDashboard, Trash2, Eye } from "lucide-react";
+import { formatDate } from "@/lib/utils";
+import Link from "next/link";
+
+export default function DashboardsPage() {
+  const { dashboards, loading, create, remove } = useDashboards();
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+
+  const handleCreate = async () => {
+    if (!name) return;
+    await create({ name, description: desc });
+    setName("");
+    setDesc("");
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Dashboards</h1>
+          <p className="text-muted-foreground">Custom data dashboards</p>
+        </div>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button><Plus className="mr-1 h-4 w-4" /> New Dashboard</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader><DialogTitle>Create Dashboard</DialogTitle></DialogHeader>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Name</Label>
+                <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Sales Overview" />
+              </div>
+              <div className="space-y-2">
+                <Label>Description</Label>
+                <Input value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Key sales metrics" />
+              </div>
+              <Button onClick={handleCreate} className="w-full">Create</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {loading ? (
+        <div className="py-20 text-center text-muted-foreground">Loading...</div>
+      ) : dashboards.length === 0 ? (
+        <Card>
+          <CardContent className="flex flex-col items-center gap-4 py-20">
+            <LayoutDashboard className="h-12 w-12 text-muted-foreground/50" />
+            <p className="text-muted-foreground">No dashboards yet.</p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {dashboards.map((d) => (
+            <Card key={d.id}>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base">{d.name}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground line-clamp-2">{d.description}</p>
+                <p className="text-xs text-muted-foreground">{formatDate(d.created_at)}</p>
+                <div className="flex gap-2">
+                  <Link href={`/dashboards/${d.id}`} className="flex-1">
+                    <Button variant="outline" size="sm" className="w-full">
+                      <Eye className="mr-1 h-3 w-3" /> View
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" size="icon" onClick={() => remove(d.id)}>
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
