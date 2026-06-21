@@ -33,7 +33,7 @@ function saveConversations(convos: Conversation[]) {
 export default function ChatPage() {
   const { datasources, refresh } = useDatasources();
   const [selectedDs, setSelectedDs] = useState<string>("");
-  const [modelProvider, setModelProvider] = useState("ollama");
+  const [modelProvider, setModelProvider] = useState("gemini");
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConvo, setActiveConvo] = useState<string | null>(null);
 

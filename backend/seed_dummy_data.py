@@ -688,7 +688,7 @@ REPORTS_DATA = [
 
 async def seed():
     async with async_session() as db:
-        result = await db.execute(select(User).where(User.email == "mzoraofficila@gmail.com"))
+        result = await db.execute(select(User).where(User.email == "mzoraofficial@gmail.com"))
         user = result.scalar_one_or_none()
         if not user:
             print("ERROR: Default user not found! Run the app first to create it.")

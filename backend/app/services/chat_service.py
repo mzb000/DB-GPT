@@ -14,21 +14,21 @@ from app.services.datasource_service import get_datasource
 
 
 async def process_chat_stream(db: AsyncSession, user: User, req: ChatRequest) -> AsyncGenerator[dict, None]:
-    yield {"type": "status", "content": "Planning analysis..."}
+    try:
+        yield {"type": "status", "content": "Planning analysis..."}
 
-    plan = await plan_query(user, req.message, req.model_provider)
-    yield {"type": "plan", "content": plan}
+        plan = await plan_query(user, req.message, req.model_provider)
+        yield {"type": "plan", "content": plan}
 
-    if req.datasource_id:
-        ds = await get_datasource(db, req.datasource_id, user.id)
-        config = json.loads(ds.config)
+        if req.datasource_id:
+            ds = await get_datasource(db, req.datasource_id, user.id)
+            config = json.loads(ds.config)
 
-        yield {"type": "status", "content": "Generating SQL..."}
-        sql = await generate_sql(user, req.message, ds.type, config, req.model_provider)
-        yield {"type": "sql", "content": sql}
+            yield {"type": "status", "content": "Generating SQL..."}
+            sql = await generate_sql(user, req.message, ds.type, config, req.model_provider)
+            yield {"type": "sql", "content": sql}
 
-        yield {"type": "status", "content": "Executing query..."}
-        try:
+            yield {"type": "status", "content": "Executing query..."}
             df, columns, rows = await execute_sql(ds.type, config, sql)
             result_data = {"columns": columns, "rows": rows}
             yield {"type": "result", "content": json.dumps(result_data)}
@@ -48,8 +48,15 @@ async def process_chat_stream(db: AsyncSession, user: User, req: ChatRequest) ->
             )
             db.add(query)
             await db.commit()
-        except Exception as e:
-            yield {"type": "error", "content": f"Query failed: {str(e)}"}
-            return
-    else:
-        yield {"type": "status", "content": "No datasource selected. Connect one or upload a file first."}
+        else:
+            yield {"type": "status", "content": "Answering with AI..."}
+            response = await llm_generate(user, req.message, req.model_provider)
+            yield {"type": "analysis", "content": response}
+    except Exception as e:
+        error_msg = str(e)
+        if "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg:
+            yield {"type": "error", "content": "Gemini API quota exceeded. Please wait a moment and try again, or check your API key billing."}
+        elif "401" in error_msg or "UNAUTHENTICATED" in error_msg:
+            yield {"type": "error", "content": "Invalid API key. Please check your Gemini API key in Settings."}
+        else:
+            yield {"type": "error", "content": f"Error: {error_msg}"}
