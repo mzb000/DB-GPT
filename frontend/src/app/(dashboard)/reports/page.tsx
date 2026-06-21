@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button";
 import { FileText, ExternalLink, Trash2 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import { FavoriteButton } from "@/components/common/favorite-button";
+import { useFavorites } from "@/hooks/use-favorites";
 import { SkeletonCardGrid } from "@/components/common/skeleton-card";
 import { api } from "@/lib/api-client";
 
 export default function ReportsPage() {
   const { reports, loading, remove } = useReports();
+  const { isFavorited, toggle } = useFavorites();
 
   const viewReport = async (id: string) => {
     const html = await api.getReportHtml(id);
@@ -43,7 +46,13 @@ export default function ReportsPage() {
           {reports.map((report) => (
             <Card key={report.id}>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">{report.title}</CardTitle>
+                <div className="flex items-start justify-between">
+                  <CardTitle className="text-base">{report.title}</CardTitle>
+                  <FavoriteButton
+                    favorited={isFavorited("report", report.id)}
+                    onToggle={() => toggle("report", report.id)}
+                  />
+                </div>
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-sm text-muted-foreground line-clamp-2">{report.description}</p>

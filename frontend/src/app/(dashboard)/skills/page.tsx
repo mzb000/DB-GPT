@@ -13,10 +13,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Play, Trash2, Zap } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import { FavoriteButton } from "@/components/common/favorite-button";
+import { useFavorites } from "@/hooks/use-favorites";
 import { SkeletonCardGrid } from "@/components/common/skeleton-card";
 
 export default function SkillsPage() {
   const { skills, loading, create, remove } = useSkills();
+  const { isFavorited, toggle } = useFavorites();
   const { datasources } = useDatasources();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -94,7 +97,13 @@ export default function SkillsPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-base">{skill.name}</CardTitle>
-                  <Badge variant="secondary">{skill.category}</Badge>
+                  <div className="flex items-center gap-1">
+                    <Badge variant="secondary">{skill.category}</Badge>
+                    <FavoriteButton
+                      favorited={isFavorited("skill", skill.id)}
+                      onToggle={() => toggle("skill", skill.id)}
+                    />
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">

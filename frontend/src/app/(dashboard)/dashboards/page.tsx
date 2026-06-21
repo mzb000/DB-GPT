@@ -12,10 +12,13 @@ import { Plus, LayoutDashboard, Trash2, Eye, BarChart3 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
 import { SkeletonCardGrid } from "@/components/common/skeleton-card";
+import { FavoriteButton } from "@/components/common/favorite-button";
+import { useFavorites } from "@/hooks/use-favorites";
 import Link from "next/link";
 
 export default function DashboardsPage() {
   const { dashboards, loading, create, remove } = useDashboards();
+  const { isFavorited, toggle } = useFavorites();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -70,7 +73,12 @@ export default function DashboardsPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {dashboards.map((d) => (
             <Card key={d.id} className="group">
-              <div className="flex h-28 items-center justify-center rounded-t-xl bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20">
+              <div className="relative flex h-28 items-center justify-center rounded-t-xl bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20">
+                <FavoriteButton
+                  favorited={isFavorited("dashboard", d.id)}
+                  onToggle={() => toggle("dashboard", d.id)}
+                  className="absolute top-2 right-2"
+                />
                 <BarChart3 className="h-10 w-10 text-primary/40" />
               </div>
               <CardHeader className="pb-2 pt-3">
