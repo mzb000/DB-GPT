@@ -21,13 +21,13 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 const colorMap: Record<string, string> = {
-  status: "bg-blue-50 text-blue-700 border-blue-200",
-  plan: "bg-purple-50 text-purple-700 border-purple-200",
-  sql: "bg-green-50 text-green-700 border-green-200",
-  result: "bg-white",
-  analysis: "bg-indigo-50 text-indigo-700 border-indigo-200",
-  error: "bg-red-50 text-red-700 border-red-200",
-  chart: "bg-white",
+  status: "bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800",
+  plan: "bg-purple-50 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800",
+  sql: "bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800",
+  result: "bg-white dark:bg-card",
+  analysis: "bg-indigo-50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800",
+  error: "bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800",
+  chart: "bg-white dark:bg-card",
 };
 
 export function ChatMessage({ event }: Props) {
@@ -46,11 +46,11 @@ export function ChatMessage({ event }: Props) {
   if (event.type === "sql") {
     return (
       <div className="flex justify-start">
-        <div className="max-w-3xl w-full rounded-lg border border-green-200 bg-green-50 p-4">
-          <div className="mb-2 flex items-center gap-2 text-sm font-medium text-green-700">
+        <div className="max-w-3xl w-full rounded-lg border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30 p-4">
+          <div className="mb-2 flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-300">
             <Database className="h-4 w-4" /> Generated SQL
           </div>
-          <pre className="overflow-x-auto rounded bg-white p-3 text-sm">{event.content}</pre>
+          <pre className="overflow-x-auto rounded bg-white dark:bg-card p-3 text-sm">{event.content}</pre>
         </div>
       </div>
     );
