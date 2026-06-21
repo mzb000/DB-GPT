@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { NAV_GROUPS } from "@/lib/constants";
 import { useAuth } from "@/hooks/use-auth";
 import {
-  MessageSquare, Database, History, Zap, LayoutDashboard, FileText, Settings,
+  Home, MessageSquare, Database, History, Zap, LayoutDashboard, FileText, Settings,
   ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/tooltip";
 
 const iconMap: Record<string, React.ReactNode> = {
+  Home: <Home className="h-4 w-4" />,
   MessageSquare: <MessageSquare className="h-4 w-4" />,
   Database: <Database className="h-4 w-4" />,
   History: <History className="h-4 w-4" />,
@@ -62,7 +63,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
               )}
               <div className="space-y-0.5">
                 {group.items.map((item) => {
-                  const active = pathname.startsWith(item.href);
+                  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
                   const link = (
                     <Link
                       key={item.href}

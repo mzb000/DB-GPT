@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from app.config import settings
 from app.database import init_db
 from app.core.events import seed_default_user
-from app.api.v1 import auth, datasources, queries, chat, skills, reports, dashboards, uploads, settings as settings_router, search, favorites
+from app.api.v1 import auth, datasources, queries, chat, skills, reports, dashboards, uploads, settings as settings_router, search, favorites, analytics
 
 
 @asynccontextmanager
@@ -34,6 +34,7 @@ app.include_router(uploads.router, prefix="/api/v1/uploads", tags=["Uploads"])
 app.include_router(settings_router.router, prefix="/api/v1/settings", tags=["Settings"])
 app.include_router(search.router, prefix="/api/v1/search", tags=["Search"])
 app.include_router(favorites.router, prefix="/api/v1/favorites", tags=["Favorites"])
+app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["Analytics"])
 
 
 @app.get("/api/health")
