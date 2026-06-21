@@ -4,6 +4,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
+import { exportCSV, exportJSON } from "@/lib/export";
 
 interface Props {
   columns: string[];
@@ -35,6 +38,14 @@ export function ResultDisplay({ columns, rows }: Props) {
       <div className="flex items-center gap-2">
         <Badge variant="secondary">{rows.length} rows</Badge>
         <Badge variant="secondary">{columns.length} columns</Badge>
+        <div className="ml-auto flex gap-1">
+          <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs" onClick={() => exportCSV(columns, rows)}>
+            <Download className="h-3 w-3" /> CSV
+          </Button>
+          <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs" onClick={() => exportJSON(columns, rows)}>
+            <Download className="h-3 w-3" /> JSON
+          </Button>
+        </div>
       </div>
 
       <Tabs defaultValue="table">
