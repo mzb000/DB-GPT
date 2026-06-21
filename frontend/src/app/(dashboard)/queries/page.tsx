@@ -47,7 +47,7 @@ export default function QueriesPage() {
                 {queries.map((q) => (
                   <TableRow key={q.id}>
                     <TableCell className="font-medium max-w-md">
-                      <Link href={`/queries?id=${q.id}`} className="hover:text-primary">
+                      <Link href={`/queries/${q.id}`} className="hover:text-primary transition-colors">
                         {truncate(q.question, 80)}
                       </Link>
                     </TableCell>
