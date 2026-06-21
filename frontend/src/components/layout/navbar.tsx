@@ -12,7 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Navbar() {
+interface NavbarProps {
+  sidebarWidth?: number;
+}
+
+export function Navbar({ sidebarWidth = 224 }: NavbarProps) {
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
 
@@ -21,7 +25,7 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed right-0 top-0 z-30 flex h-14 items-center gap-4 border-b bg-card px-6" style={{ left: "224px" }}>
+    <header className="fixed right-0 top-0 z-30 flex h-14 items-center gap-4 border-b bg-card px-6 transition-all duration-200" style={{ left: sidebarWidth }}>
       <div className="flex-1" />
       <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8">
         <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
