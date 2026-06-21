@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, ExternalLink, Trash2 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { PageHeader } from "@/components/common/page-header";
 import { api } from "@/lib/api-client";
 
 export default function ReportsPage() {
@@ -21,10 +22,11 @@ export default function ReportsPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Reports</h1>
-        <p className="text-muted-foreground">Shareable HTML analysis reports</p>
-      </div>
+      <PageHeader
+        title="Reports"
+        description="Shareable HTML analysis reports"
+        breadcrumbs={[{ label: "Reports" }]}
+      />
 
       {loading ? (
         <div className="py-20 text-center text-muted-foreground">Loading...</div>

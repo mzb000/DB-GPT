@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, LayoutDashboard, Trash2, Eye } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { PageHeader } from "@/components/common/page-header";
 import Link from "next/link";
 
 export default function DashboardsPage() {
@@ -27,15 +28,15 @@ export default function DashboardsPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Dashboards</h1>
-          <p className="text-muted-foreground">Custom data dashboards</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button><Plus className="mr-1 h-4 w-4" /> New Dashboard</Button>
-          </DialogTrigger>
+      <PageHeader
+        title="Dashboards"
+        description="Custom data dashboards"
+        breadcrumbs={[{ label: "Dashboards" }]}
+        actions={
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button><Plus className="mr-1 h-4 w-4" /> New Dashboard</Button>
+            </DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>Create Dashboard</DialogTitle></DialogHeader>
             <div className="space-y-4">
@@ -51,7 +52,8 @@ export default function DashboardsPage() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
+        }
+      />
 
       {loading ? (
         <div className="py-20 text-center text-muted-foreground">Loading...</div>

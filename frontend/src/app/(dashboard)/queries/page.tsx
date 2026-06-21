@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { History, Clock } from "lucide-react";
 import { formatDate, truncate } from "@/lib/utils";
+import { PageHeader } from "@/components/common/page-header";
 import Link from "next/link";
 
 export default function QueriesPage() {
@@ -13,10 +14,11 @@ export default function QueriesPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Query History</h1>
-        <p className="text-muted-foreground">Recently executed queries</p>
-      </div>
+      <PageHeader
+        title="Query History"
+        description="Recently executed queries"
+        breadcrumbs={[{ label: "Query History" }]}
+      />
 
       {loading ? (
         <div className="flex items-center justify-center py-20 text-muted-foreground">Loading...</div>

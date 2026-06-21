@@ -10,6 +10,7 @@ import { ConnectionForm } from "@/components/datasources/connection-form";
 import { useDatasources } from "@/hooks/use-datasources";
 import { Plus, Trash2, Database } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { PageHeader } from "@/components/common/page-header";
 
 export default function DatasourcesPage() {
   const { datasources, loading, create, remove } = useDatasources();
@@ -17,15 +18,15 @@ export default function DatasourcesPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Data Sources</h1>
-          <p className="text-muted-foreground">Connect databases or upload files</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button><Plus className="mr-1 h-4 w-4" /> Add Source</Button>
-          </DialogTrigger>
+      <PageHeader
+        title="Data Sources"
+        description="Connect databases or upload files"
+        breadcrumbs={[{ label: "Data Sources" }]}
+        actions={
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button><Plus className="mr-1 h-4 w-4" /> Add Source</Button>
+            </DialogTrigger>
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
               <DialogTitle>Connect Database</DialogTitle>
@@ -33,7 +34,8 @@ export default function DatasourcesPage() {
             <ConnectionForm onDone={(ds) => { create(ds); setOpen(false); }} />
           </DialogContent>
         </Dialog>
-      </div>
+        }
+      />
 
       {loading ? (
         <div className="flex items-center justify-center py-20 text-muted-foreground">Loading...</div>

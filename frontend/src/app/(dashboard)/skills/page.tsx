@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Play, Trash2, Zap } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { PageHeader } from "@/components/common/page-header";
 
 export default function SkillsPage() {
   const { skills, loading, create, remove } = useSkills();
@@ -31,15 +32,15 @@ export default function SkillsPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Skills</h1>
-          <p className="text-muted-foreground">Reusable analysis templates</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button><Plus className="mr-1 h-4 w-4" /> New Skill</Button>
-          </DialogTrigger>
+      <PageHeader
+        title="Skills"
+        description="Reusable analysis templates"
+        breadcrumbs={[{ label: "Skills" }]}
+        actions={
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button><Plus className="mr-1 h-4 w-4" /> New Skill</Button>
+            </DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>Create Skill</DialogTitle></DialogHeader>
             <div className="space-y-4">
@@ -73,7 +74,8 @@ export default function SkillsPage() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
+        }
+      />
 
       {loading ? (
         <div className="py-20 text-center text-muted-foreground">Loading...</div>

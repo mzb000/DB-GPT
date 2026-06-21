@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useState, useEffect } from "react";
 import { Settings, Key, Server } from "lucide-react";
+import { PageHeader } from "@/components/common/page-header";
 
 export default function SettingsPage() {
   const { settings, update } = useSettings();
@@ -34,10 +35,11 @@ export default function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="text-muted-foreground">Configure your AI providers</p>
-      </div>
+      <PageHeader
+        title="Settings"
+        description="Configure your AI providers"
+        breadcrumbs={[{ label: "Settings" }]}
+      />
 
       <Card className="mb-6">
         <CardHeader>
