@@ -10,6 +10,7 @@ import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -30,18 +31,30 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   useKeyboardShortcuts({ onToggleSidebar: toggle, onToggleTheme: toggleTheme });
 
+  const sidebarWidth = collapsed ? 64 : 224;
+
   return (
     <div className="min-h-screen">
-      <Sidebar collapsed={collapsed} onToggle={toggle} />
-      <Navbar sidebarWidth={collapsed ? 64 : 224} />
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={toggle}
+        mobileOpen={mobileOpen}
+        onMobileClose={() => setMobileOpen(false)}
+      />
+      <Navbar
+        sidebarWidth={sidebarWidth}
+        onMobileMenuToggle={() => setMobileOpen((o) => !o)}
+      />
       <CommandPalette />
       <ShortcutsDialog />
-      <main
-        className="mt-14 p-6 transition-all duration-200"
-        style={{ marginLeft: collapsed ? 64 : 224 }}
-      >
+      <main className="mt-14 p-4 transition-all duration-200 md:p-6 md:ml-56" style={{ marginLeft: undefined }}>
         {children}
       </main>
+      <style>{`
+        @media (min-width: 768px) {
+          main { margin-left: ${sidebarWidth}px !important; }
+        }
+      `}</style>
     </div>
   );
 }
