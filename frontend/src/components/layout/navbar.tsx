@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "next-themes";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { LogOut, User, Sun, Moon } from "lucide-react";
+import { LogOut, User, Sun, Moon, Search } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +26,14 @@ export function Navbar({ sidebarWidth = 224 }: NavbarProps) {
 
   return (
     <header className="fixed right-0 top-0 z-30 flex h-14 items-center gap-4 border-b bg-card px-6 transition-all duration-200" style={{ left: sidebarWidth }}>
+      <button
+        onClick={() => document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }))}
+        className="flex h-8 w-64 items-center gap-2 rounded-md border bg-muted/50 px-3 text-sm text-muted-foreground transition-colors hover:bg-muted"
+      >
+        <Search className="h-3.5 w-3.5" />
+        <span className="flex-1 text-left">Search...</span>
+        <kbd className="rounded border bg-background px-1.5 py-0.5 text-[10px] font-medium">Ctrl+K</kbd>
+      </button>
       <div className="flex-1" />
       <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8">
         <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />

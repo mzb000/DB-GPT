@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Sidebar } from "./sidebar";
 import { Navbar } from "./navbar";
+import { CommandPalette } from "@/components/common/command-palette";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -23,6 +24,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen">
       <Sidebar collapsed={collapsed} onToggle={toggle} />
       <Navbar sidebarWidth={collapsed ? 64 : 224} />
+      <CommandPalette />
       <main
         className="mt-14 p-6 transition-all duration-200"
         style={{ marginLeft: collapsed ? 64 : 224 }}
