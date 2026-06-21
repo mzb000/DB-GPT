@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { FileText, ExternalLink, Trash2 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import { SkeletonCardGrid } from "@/components/common/skeleton-card";
 import { api } from "@/lib/api-client";
 
 export default function ReportsPage() {
@@ -29,7 +30,7 @@ export default function ReportsPage() {
       />
 
       {loading ? (
-        <div className="py-20 text-center text-muted-foreground">Loading...</div>
+        <SkeletonCardGrid count={6} />
       ) : reports.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-20">

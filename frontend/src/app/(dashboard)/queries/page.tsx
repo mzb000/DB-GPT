@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { History, Clock } from "lucide-react";
 import { formatDate, truncate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import { SkeletonTable } from "@/components/common/skeleton-table";
 import Link from "next/link";
 
 export default function QueriesPage() {
@@ -21,7 +22,7 @@ export default function QueriesPage() {
       />
 
       {loading ? (
-        <div className="flex items-center justify-center py-20 text-muted-foreground">Loading...</div>
+        <SkeletonTable rows={5} />
       ) : queries.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-20">

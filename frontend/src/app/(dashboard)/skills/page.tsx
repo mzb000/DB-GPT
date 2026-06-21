@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Play, Trash2, Zap } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import { SkeletonCardGrid } from "@/components/common/skeleton-card";
 
 export default function SkillsPage() {
   const { skills, loading, create, remove } = useSkills();
@@ -78,7 +79,7 @@ export default function SkillsPage() {
       />
 
       {loading ? (
-        <div className="py-20 text-center text-muted-foreground">Loading...</div>
+        <SkeletonCardGrid count={6} />
       ) : skills.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-20">

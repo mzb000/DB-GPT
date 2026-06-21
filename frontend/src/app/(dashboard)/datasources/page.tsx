@@ -11,6 +11,7 @@ import { useDatasources } from "@/hooks/use-datasources";
 import { Plus, Trash2, Database } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import { SkeletonTable } from "@/components/common/skeleton-table";
 
 export default function DatasourcesPage() {
   const { datasources, loading, create, remove } = useDatasources();
@@ -38,7 +39,7 @@ export default function DatasourcesPage() {
       />
 
       {loading ? (
-        <div className="flex items-center justify-center py-20 text-muted-foreground">Loading...</div>
+        <SkeletonTable rows={5} />
       ) : datasources.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-20">

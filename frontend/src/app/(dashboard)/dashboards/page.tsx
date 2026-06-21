@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Plus, LayoutDashboard, Trash2, Eye } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import { SkeletonCardGrid } from "@/components/common/skeleton-card";
 import Link from "next/link";
 
 export default function DashboardsPage() {
@@ -56,7 +57,7 @@ export default function DashboardsPage() {
       />
 
       {loading ? (
-        <div className="py-20 text-center text-muted-foreground">Loading...</div>
+        <SkeletonCardGrid count={6} />
       ) : dashboards.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-20">
